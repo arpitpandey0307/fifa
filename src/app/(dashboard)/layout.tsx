@@ -2,7 +2,6 @@
 
 import { Sidebar } from "@/components/layout/sidebar";
 import { Topbar } from "@/components/layout/topbar";
-import { useState } from "react";
 
 export default function DashboardLayout({
   children,

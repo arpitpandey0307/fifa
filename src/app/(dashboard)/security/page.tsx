@@ -8,10 +8,7 @@ import {
   Eye,
   AlertTriangle,
   CheckCircle2,
-  Clock,
   Brain,
-  RefreshCw,
-  ArrowUpRight,
 } from "lucide-react";
 import { usePolling } from "@/hooks/use-data";
 import { cn, getRiskBgColor, formatRelativeTime } from "@/lib/utils";

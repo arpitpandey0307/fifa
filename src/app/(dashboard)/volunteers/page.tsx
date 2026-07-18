@@ -7,7 +7,6 @@ import {
   Clock,
   MapPin,
   CheckCircle2,
-  ArrowRight,
   Brain,
   Star,
   Navigation,

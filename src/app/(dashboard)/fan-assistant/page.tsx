@@ -4,11 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
-  Mic,
-  MapPin,
-  Utensils,
-  Car,
-  Accessibility,
   Globe,
   Sparkles,
   User,

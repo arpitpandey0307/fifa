@@ -1,10 +1,12 @@
 // ============================================================================
 // FIFA Nexus AI — Gemini Client
-// Wrapper around @google/genai for structured AI responses.
+// Type-safe wrapper around @google/genai for structured AI responses.
+// Provides automatic fallback when API key is unavailable.
 // ============================================================================
 
 import { GoogleGenAI } from "@google/genai";
 
+/** Gemini API key loaded from environment variables. */
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
@@ -13,19 +15,31 @@ if (!apiKey) {
   );
 }
 
+/** Singleton Gemini client instance. `null` when API key is missing. */
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
+/** Supported Gemini model identifiers. */
 export type GeminiModel = "gemini-2.5-pro" | "gemini-2.0-flash";
 
+/** Configuration options for Gemini API calls. */
 interface GeminiOptions {
+  /** Which Gemini model to use. Defaults to `gemini-2.0-flash`. */
   model?: GeminiModel;
+  /** Sampling temperature (0–1). Lower = more deterministic. */
   temperature?: number;
+  /** Maximum tokens in the response. */
   maxTokens?: number;
 }
 
 /**
  * Call Gemini with a system prompt and user message.
- * Returns the text response.
+ * Returns a plain text response. Falls back to heuristic responses
+ * when the API key is not configured or the API call fails.
+ *
+ * @param systemPrompt - The system-level instruction for the AI.
+ * @param userMessage - The user's input message.
+ * @param options - Optional model, temperature, and token configuration.
+ * @returns The AI-generated text response.
  */
 export async function callGemini(
   systemPrompt: string,
@@ -54,15 +68,24 @@ export async function callGemini(
     });
 
     return response.text ?? "No response generated.";
-  } catch (error) {
-    console.error("Gemini API error:", error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Gemini API error:", message);
     return getFallbackResponse(userMessage);
   }
 }
 
 /**
  * Call Gemini expecting a JSON response.
- * Parses the response and returns the parsed object.
+ * Parses the raw text into a typed object. Throws if the API key is
+ * missing or the response cannot be parsed.
+ *
+ * @typeParam T - The expected shape of the parsed JSON response.
+ * @param systemPrompt - The system-level instruction for the AI.
+ * @param userMessage - The user's input message.
+ * @param options - Optional model, temperature, and token configuration.
+ * @returns The parsed JSON response from Gemini.
+ * @throws {Error} When the API key is not configured or parsing fails.
  */
 export async function callGeminiJSON<T>(
   systemPrompt: string,
@@ -93,14 +116,19 @@ export async function callGeminiJSON<T>(
 
     const text = response.text ?? "{}";
     return JSON.parse(text) as T;
-  } catch (error) {
-    console.error("Gemini JSON API error:", error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Gemini JSON API error:", message);
     throw error;
   }
 }
 
 /**
- * Fallback response when Gemini is unavailable.
+ * Generate a heuristic fallback response when Gemini is unavailable.
+ * Uses keyword matching to provide contextually relevant answers.
+ *
+ * @param input - The user's original message.
+ * @returns A pre-written response matching the detected intent.
  */
 function getFallbackResponse(input: string): string {
   const lower = input.toLowerCase();

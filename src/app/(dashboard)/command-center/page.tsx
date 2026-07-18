@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Users,
-  Car,
   ShieldAlert,
   HeartPulse,
   Zap,

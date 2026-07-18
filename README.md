@@ -1,30 +1,67 @@
 # FIFA Nexus AI — Smart Stadium Operations Platform
 
-> **GenAI-enabled solution for FIFA World Cup 2026 Smart Stadium Operations**  
+> **GenAI-enabled solution for FIFA World Cup 2026 Smart Stadium Operations**
 > Built with Next.js 16, Google Gemini AI, and deployable on Google Cloud Run.
 
 ---
 
-## 🌟 Problem Statement
+## 🌟 Challenge Vertical
 
-Build a GenAI-enabled solution that enhances stadium operations and the overall tournament experience for fans, organizers, volunteers, and venue staff during the FIFA World Cup 2026.
+**[Challenge 4] Smart Stadiums & Tournament Operations**
+
+Build a GenAI-enabled solution that enhances stadium operations and the overall tournament experience for fans, organizers, volunteers, or venue staff. The solution leverages Generative AI to improve navigation, crowd management, accessibility, transportation, sustainability, multilingual assistance, operational intelligence, and real-time decision support during the FIFA World Cup 2026.
 
 ## 🎯 Solution Overview
 
-FIFA Nexus AI is a comprehensive AI-powered stadium operations platform that leverages **Google Gemini AI** to provide:
+FIFA Nexus AI is a comprehensive AI-powered stadium operations platform that leverages **Google Gemini AI** to provide real-time decision support across all personas:
 
-- **Real-time Crowd Intelligence** — AI density prediction with 5/10/15 min forecasting
-- **Multilingual Fan Assistant** — Context-aware AI concierge supporting 7 languages
-- **Incident Commander** — Natural language incident triage with AI dispatch
-- **Security Copilot** — AI-augmented surveillance with anomaly detection
-- **Volunteer Copilot** — Dynamic AI task assignment and coordination
-- **Transport Intelligence** — Multi-modal transport monitoring and AI routing
-- **Sustainability Dashboard** — Environmental monitoring with AI optimization
-- **Accessibility** — Full WCAG compliance, reduced motion, high contrast, screen reader support
+| Persona | Feature | AI Capability |
+|---------|---------|---------------|
+| **Fans** | Multilingual AI Assistant | Context-aware concierge in 7 languages, food/seat/exit guidance |
+| **Organizers** | AI Command Center | Real-time situation summary with priority actions |
+| **Security** | Security Copilot | AI-augmented anomaly detection and threat assessment |
+| **Volunteers** | Volunteer Copilot | Dynamic AI task prioritization and routing |
+| **Medical** | Incident Commander | NLP-based incident triage with auto-dispatch |
+| **Transport** | Transport Intelligence | Multi-modal congestion monitoring and AI routing |
+| **Sustainability** | Green Dashboard | Environmental monitoring with AI optimization |
 
 ---
 
-## 🧠 Google Gemini AI Integration
+## 🧠 Approach & Logic
+
+### Design Philosophy
+
+1. **Context-Aware AI**: Every AI interaction receives rich context (user seat, zone density, vendor queues, match minute) enabling highly specific and actionable responses.
+2. **Intelligent Fallbacks**: All AI features gracefully degrade with keyword-based heuristic responses when Gemini is unavailable — the platform never breaks.
+3. **Real-Time Simulation**: A physics-inspired simulation engine generates realistic match-day patterns (pre-match arrival, halftime rush, post-match exit) for demonstration.
+4. **Security-First**: All user inputs pass through Zod validation schemas and XSS sanitization before reaching any AI model.
+
+### How It Works
+
+```
+User Input → Zod Validation → XSS Sanitization → Context Enrichment
+     ↓
+Gemini AI (with system prompt + stadium context)
+     ↓
+Structured Response → UI Rendering (with ARIA accessibility)
+```
+
+1. **Fan sends a message** (e.g., "I'm hungry" in Hindi) →
+2. **Schema validation** strips excess, validates length →
+3. **Context builder** attaches user's seat, nearby vendors, zone density →
+4. **Gemini 2.0 Flash** generates personalized, language-matched response →
+5. **UI renders** with proper ARIA live regions and keyboard navigation
+
+### Assumptions
+
+- MetLife Stadium (New Jersey) is used as the reference venue with realistic zone codes
+- Match simulation cycles automatically for demo purposes (1 real min ≈ 2 simulated min)
+- The platform operates as a control center dashboard (not a mobile fan app)
+- API key is optional — all features work with intelligent fallbacks
+
+---
+
+## 🔌 Google Gemini AI Integration
 
 This project uses **Google Gemini AI** (`@google/genai`) as the core generative AI engine:
 
@@ -52,14 +89,14 @@ echo "GEMINI_API_KEY=your_api_key_here" > .env.local
 ## 🏗️ Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+|-------|-----------  |
 | **Frontend** | Next.js 16 (App Router), React 19, TypeScript 5 |
 | **AI Engine** | Google Gemini AI (`@google/genai`) |
 | **Styling** | TailwindCSS v4, Glassmorphism design system |
 | **State** | Zustand (persisted), custom polling hooks |
 | **Animation** | Framer Motion |
 | **Validation** | Zod v4 (input sanitization on all API routes) |
-| **Deployment** | Docker, Google Cloud Run |
+| **Deployment** | Docker, Google Cloud Run, App Engine |
 | **Testing** | Vitest, React Testing Library |
 
 ---
@@ -78,18 +115,19 @@ src/
 │   │   ├── volunteers/       # Volunteer Copilot
 │   │   ├── sustainability/   # Sustainability Dashboard
 │   │   ├── transport/        # Transport Intelligence
-│   │   └── settings/         # User Preferences
+│   │   └── settings/         # User Preferences & Accessibility
 │   ├── api/
 │   │   ├── ai/               # Gemini AI endpoints (chat, predict, incident, summary)
 │   │   ├── data/             # Data endpoints (dashboard, crowd, transport, sustainability)
-│   │   └── health/           # Health check
+│   │   └── health/           # Health check for Cloud Run
 │   └── page.tsx              # Landing page
 ├── components/               # Reusable UI components
 ├── data/                     # Simulation engine & static data
 ├── hooks/                    # Custom React hooks (polling, chat, media queries)
 ├── lib/                      # Utilities, Gemini client, prompts, schemas, constants
 ├── stores/                   # Zustand state stores
-└── types/                    # TypeScript type definitions
+├── types/                    # TypeScript type definitions
+└── __tests__/                # Vitest unit & integration tests
 ```
 
 ---
@@ -159,29 +197,36 @@ docker build -t fifa-nexus-ai .
 docker run -p 8080:8080 -e GEMINI_API_KEY=your_key fifa-nexus-ai
 ```
 
+### Deploy to App Engine
+
+```bash
+gcloud app deploy app.yaml
+```
+
 ---
 
 ## 🔒 Security
 
-- **Input Validation**: All API endpoints use Zod schemas for strict input validation
-- **XSS Prevention**: User input is sanitized via `sanitizeInput()` utility
-- **Rate Limiting**: API routes include rate limiting middleware
-- **Security Headers**: CSP, X-Frame-Options, and other security headers configured
-- **No Secrets in Code**: API keys managed via environment variables only
-- **Non-root Docker**: Production container runs as unprivileged `nextjs` user
+- **Input Validation**: All API endpoints use Zod v4 schemas for strict input validation and type-safe parsing
+- **XSS Prevention**: User input is sanitized via `sanitizeInput()` — HTML entities escaped, length-capped at 2000 chars
+- **Rate Limiting**: In-memory sliding window rate limiter (60 req/min per IP) with automatic stale-entry cleanup
+- **Security Headers**: CSP (no `unsafe-eval`), HSTS with preload, X-Frame-Options DENY, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+- **No Secrets in Code**: API keys managed exclusively via environment variables
+- **Non-root Docker**: Production container runs as unprivileged `nextjs` user (UID 1001)
+- **Frame Protection**: `frame-ancestors 'none'` in CSP + `X-Frame-Options: DENY`
 
 ---
 
 ## ♿ Accessibility
 
-- WCAG 2.1 AA compliant
-- Full keyboard navigation
-- ARIA labels and roles on all interactive elements
-- Screen reader optimized with `role="log"`, `role="alert"`, `aria-live`
-- High contrast mode toggle
-- Reduced motion mode for vestibular sensitivity
-- 7-language support (English, Hindi, Spanish, French, Arabic, Japanese, German)
-- Skip navigation link for keyboard users
+- WCAG 2.1 AA compliant across all pages
+- Full keyboard navigation with visible focus indicators (`:focus-visible`)
+- ARIA labels and roles on all interactive elements (`role="navigation"`, `role="log"`, `role="switch"`, `aria-expanded`, `aria-pressed`, `aria-selected`)
+- Screen reader optimized with `aria-live="polite"` for chat messages and alerts
+- Skip navigation link (`#main-content`) for keyboard users
+- High contrast mode toggle in settings
+- Reduced motion mode respecting `prefers-reduced-motion` system preference
+- 7-language support: English, Hindi (हिन्दी), Spanish (Español), French (Français), Arabic (العربية), Japanese (日本語), German (Deutsch)
 
 ---
 
@@ -189,16 +234,16 @@ docker run -p 8080:8080 -e GEMINI_API_KEY=your_key fifa-nexus-ai
 
 | Criterion | Implementation |
 |-----------|---------------|
-| **Code Quality** | TypeScript strict mode, modular architecture, JSDoc comments, clean separation of concerns |
-| **Security** | Zod validation, XSS sanitization, rate limiting, security headers, env-based secrets |
-| **Efficiency** | Standalone Next.js output, tab-visibility polling, memoized callbacks, lazy loading |
-| **Testing** | Vitest + React Testing Library, unit tests for utilities and API routes |
-| **Accessibility** | WCAG 2.1 AA, ARIA, keyboard nav, high contrast, reduced motion, 7 languages |
-| **Google Services** | Gemini 2.0 Flash + 2.5 Pro, Cloud Run deployment, Docker containerization |
-| **Problem Alignment** | Covers all personas (fans, volunteers, security, organizers) with GenAI features |
+| **Code Quality** | TypeScript strict mode, modular architecture, JSDoc on all exports, zero unused imports, clean separation of concerns |
+| **Security** | Zod validation, XSS sanitization, rate limiting, HSTS, CSP without unsafe-eval, env-based secrets, non-root Docker |
+| **Efficiency** | Standalone Next.js output, tab-visibility polling pause, memoized callbacks, lazy loading, seeded deterministic simulation |
+| **Testing** | Vitest + React Testing Library, 6 test suites covering utils, schemas, simulator, API routes, Gemini client, and constants/prompts |
+| **Accessibility** | WCAG 2.1 AA, ARIA roles/labels, keyboard nav, high contrast, reduced motion, skip-nav, 7 languages |
+| **Google Services** | Gemini 2.0 Flash + 2.5 Pro via `@google/genai`, Cloud Run + App Engine deployment, Dockerfile with health checks |
+| **Problem Alignment** | All 7 personas (fan, volunteer, security, organizer, medical, transport, vendor) with GenAI-powered features for navigation, crowd management, accessibility, multilingual support, sustainability, and real-time decision making |
 
 ---
 
 ## 📄 License
 
-Built for the FIFA World Cup 2026 Hackathon. © 2026 FIFA Nexus AI Team.
+Built for the FIFA World Cup 2026 PromptWars Hackathon. © 2026 FIFA Nexus AI Team.
