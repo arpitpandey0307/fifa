@@ -1,0 +1,179 @@
+{
+  "id": "metlife-stadium",
+  "name": "MetLife Stadium",
+  "city": "East Rutherford, New Jersey",
+  "country": "United States",
+  "totalCapacity": 82500,
+  "coordinates": { "lat": 40.8135, "lng": -74.0745 },
+  "zones": [
+    {
+      "id": "zone-ns-a",
+      "code": "NS-A",
+      "name": "North Stand A",
+      "type": "stand",
+      "capacity": 8500,
+      "coordinates": { "lat": 40.8145, "lng": -74.0745 },
+      "polygon": [[40.8148, -74.0760], [40.8148, -74.0730], [40.8142, -74.0730], [40.8142, -74.0760]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-ns-b",
+      "code": "NS-B",
+      "name": "North Stand B",
+      "type": "stand",
+      "capacity": 8200,
+      "coordinates": { "lat": 40.8145, "lng": -74.0735 },
+      "polygon": [[40.8148, -74.0740], [40.8148, -74.0720], [40.8142, -74.0720], [40.8142, -74.0740]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-ss-a",
+      "code": "SS-A",
+      "name": "South Stand A",
+      "type": "stand",
+      "capacity": 8500,
+      "coordinates": { "lat": 40.8125, "lng": -74.0745 },
+      "polygon": [[40.8128, -74.0760], [40.8128, -74.0730], [40.8122, -74.0730], [40.8122, -74.0760]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-ss-b",
+      "code": "SS-B",
+      "name": "South Stand B",
+      "type": "stand",
+      "capacity": 8200,
+      "coordinates": { "lat": 40.8125, "lng": -74.0735 },
+      "polygon": [[40.8128, -74.0740], [40.8128, -74.0720], [40.8122, -74.0720], [40.8122, -74.0740]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-es",
+      "code": "ES",
+      "name": "East Stand",
+      "type": "stand",
+      "capacity": 12000,
+      "coordinates": { "lat": 40.8135, "lng": -74.0725 },
+      "polygon": [[40.8145, -74.0730], [40.8145, -74.0720], [40.8125, -74.0720], [40.8125, -74.0730]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-ws",
+      "code": "WS",
+      "name": "West Stand",
+      "type": "stand",
+      "capacity": 12000,
+      "coordinates": { "lat": 40.8135, "lng": -74.0765 },
+      "polygon": [[40.8145, -74.0770], [40.8145, -74.0760], [40.8125, -74.0760], [40.8125, -74.0770]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-vip",
+      "code": "VIP",
+      "name": "VIP Lounge",
+      "type": "vip",
+      "capacity": 3000,
+      "coordinates": { "lat": 40.8138, "lng": -74.0745 },
+      "polygon": [[40.8140, -74.0750], [40.8140, -74.0740], [40.8136, -74.0740], [40.8136, -74.0750]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-gate-a",
+      "code": "GA",
+      "name": "Gate A",
+      "type": "gate",
+      "capacity": 2000,
+      "coordinates": { "lat": 40.8150, "lng": -74.0745 },
+      "polygon": [[40.8152, -74.0748], [40.8152, -74.0742], [40.8148, -74.0742], [40.8148, -74.0748]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-gate-b",
+      "code": "GB",
+      "name": "Gate B",
+      "type": "gate",
+      "capacity": 2000,
+      "coordinates": { "lat": 40.8135, "lng": -74.0715 },
+      "polygon": [[40.8138, -74.0718], [40.8138, -74.0712], [40.8132, -74.0712], [40.8132, -74.0718]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-gate-d",
+      "code": "GD",
+      "name": "Gate D",
+      "type": "gate",
+      "capacity": 2000,
+      "coordinates": { "lat": 40.8120, "lng": -74.0745 },
+      "polygon": [[40.8122, -74.0748], [40.8122, -74.0742], [40.8118, -74.0742], [40.8118, -74.0748]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-fc-north",
+      "code": "FC-N",
+      "name": "North Food Court",
+      "type": "food_court",
+      "capacity": 3000,
+      "coordinates": { "lat": 40.8147, "lng": -74.0750 },
+      "polygon": [[40.8149, -74.0755], [40.8149, -74.0745], [40.8145, -74.0745], [40.8145, -74.0755]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-fc-south",
+      "code": "FC-S",
+      "name": "South Food Court",
+      "type": "food_court",
+      "capacity": 3000,
+      "coordinates": { "lat": 40.8123, "lng": -74.0750 },
+      "polygon": [[40.8125, -74.0755], [40.8125, -74.0745], [40.8121, -74.0745], [40.8121, -74.0755]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-med-1",
+      "code": "MED-1",
+      "name": "Medical Station 1",
+      "type": "medical",
+      "capacity": 50,
+      "coordinates": { "lat": 40.8148, "lng": -74.0738 },
+      "polygon": [[40.8149, -74.0740], [40.8149, -74.0736], [40.8147, -74.0736], [40.8147, -74.0740]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-med-2",
+      "code": "MED-2",
+      "name": "Medical Station 2",
+      "type": "medical",
+      "capacity": 50,
+      "coordinates": { "lat": 40.8122, "lng": -74.0738 },
+      "polygon": [[40.8123, -74.0740], [40.8123, -74.0736], [40.8121, -74.0736], [40.8121, -74.0740]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-parking-a",
+      "code": "PKA",
+      "name": "Parking Lot A",
+      "type": "parking",
+      "capacity": 8000,
+      "coordinates": { "lat": 40.8160, "lng": -74.0760 },
+      "polygon": [[40.8165, -74.0770], [40.8165, -74.0750], [40.8155, -74.0750], [40.8155, -74.0770]],
+      "isAccessible": true
+    },
+    {
+      "id": "zone-parking-b",
+      "code": "PKB",
+      "name": "Parking Lot B",
+      "type": "parking",
+      "capacity": 6000,
+      "coordinates": { "lat": 40.8110, "lng": -74.0720 },
+      "polygon": [[40.8115, -74.0730], [40.8115, -74.0710], [40.8105, -74.0710], [40.8105, -74.0730]],
+      "isAccessible": true
+    }
+  ],
+  "gates": ["Gate A", "Gate B", "Gate C", "Gate D"],
+  "medicalStations": ["Medical Station 1", "Medical Station 2"],
+  "medicalTeams": [
+    { "id": "MED-01", "location": "Medical Station 1", "status": "available" },
+    { "id": "MED-02", "location": "Medical Station 1", "status": "available" },
+    { "id": "MED-03", "location": "Medical Station 2", "status": "available" },
+    { "id": "MED-04", "location": "Roving - East Stand", "status": "available" },
+    { "id": "MED-05", "location": "Roving - West Stand", "status": "on_call" }
+  ]
+}

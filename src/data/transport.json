@@ -1,0 +1,57 @@
+{
+  "metro": [
+    {
+      "routeName": "NJ Transit - Meadowlands Line",
+      "station": "MetLife Stadium Station",
+      "frequency": "Every 10 minutes (match day)",
+      "lastService": "90 minutes after match"
+    }
+  ],
+  "bus": [
+    {
+      "routeName": "Route 160 - Port Authority",
+      "stop": "Stadium Bus Terminal",
+      "frequency": "Every 15 minutes",
+      "lastService": "60 minutes after match"
+    },
+    {
+      "routeName": "Route 772 - Secaucus Junction",
+      "stop": "Lot K Bus Stop",
+      "frequency": "Every 20 minutes",
+      "lastService": "75 minutes after match"
+    }
+  ],
+  "rideshare": {
+    "pickupZones": ["Lot J - Rideshare Zone", "Gate E - Drop-off Area"],
+    "estimatedSurge": 2.5,
+    "avgWaitMinutes": 12
+  },
+  "parking": [
+    {
+      "id": "lot-a",
+      "name": "Parking Lot A",
+      "totalSpaces": 8000,
+      "type": "general",
+      "exitRoutes": ["Route 3 West", "Route 120"]
+    },
+    {
+      "id": "lot-b",
+      "name": "Parking Lot B",
+      "totalSpaces": 6000,
+      "type": "general",
+      "exitRoutes": ["Route 17 South", "I-95 North"]
+    },
+    {
+      "id": "lot-j",
+      "name": "Parking Lot J",
+      "totalSpaces": 3000,
+      "type": "premium",
+      "exitRoutes": ["Route 3 East"]
+    }
+  ],
+  "walking": {
+    "nearestTransitHub": "Secaucus Junction",
+    "distanceKm": 2.1,
+    "estimatedMinutes": 25
+  }
+}

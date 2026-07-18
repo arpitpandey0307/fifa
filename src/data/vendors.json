@@ -1,0 +1,112 @@
+[
+  {
+    "id": "vendor-01",
+    "name": "Green Bites",
+    "zone": "FC-N",
+    "cuisine": "Healthy & Salads",
+    "isHalal": false,
+    "isVegetarian": true,
+    "isAccessible": true,
+    "menuHighlights": ["Caesar Salad", "Quinoa Bowl", "Fruit Smoothie", "Veggie Wrap"],
+    "coordinates": { "lat": 40.8147, "lng": -74.0752 }
+  },
+  {
+    "id": "vendor-02",
+    "name": "World Kitchen",
+    "zone": "FC-N",
+    "cuisine": "International",
+    "isHalal": true,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["Chicken Shawarma", "Beef Tacos", "Falafel Plate", "Lamb Kebab"],
+    "coordinates": { "lat": 40.8148, "lng": -74.0748 }
+  },
+  {
+    "id": "vendor-03",
+    "name": "Pizza Corner",
+    "zone": "FC-N",
+    "cuisine": "Italian",
+    "isHalal": false,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["Margherita Pizza", "Pepperoni Slice", "Garlic Bread", "Tiramisu"],
+    "coordinates": { "lat": 40.8146, "lng": -74.0746 }
+  },
+  {
+    "id": "vendor-04",
+    "name": "Sushi Express",
+    "zone": "FC-S",
+    "cuisine": "Japanese",
+    "isHalal": false,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["California Roll", "Edamame", "Miso Soup", "Tempura"],
+    "coordinates": { "lat": 40.8124, "lng": -74.0752 }
+  },
+  {
+    "id": "vendor-05",
+    "name": "Taco Fiesta",
+    "zone": "FC-S",
+    "cuisine": "Mexican",
+    "isHalal": false,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["Carnitas Tacos", "Guacamole & Chips", "Burrito Bowl", "Churros"],
+    "coordinates": { "lat": 40.8123, "lng": -74.0748 }
+  },
+  {
+    "id": "vendor-06",
+    "name": "Burger Nation",
+    "zone": "FC-S",
+    "cuisine": "American",
+    "isHalal": false,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["Classic Burger", "Chicken Tenders", "Loaded Fries", "Milkshake"],
+    "coordinates": { "lat": 40.8122, "lng": -74.0746 }
+  },
+  {
+    "id": "vendor-07",
+    "name": "Chai & Chaat",
+    "zone": "FC-N",
+    "cuisine": "Indian",
+    "isHalal": true,
+    "isVegetarian": true,
+    "isAccessible": true,
+    "menuHighlights": ["Samosa", "Pani Puri", "Masala Chai", "Mango Lassi"],
+    "coordinates": { "lat": 40.8147, "lng": -74.0744 }
+  },
+  {
+    "id": "vendor-08",
+    "name": "Hydration Station",
+    "zone": "FC-N",
+    "cuisine": "Beverages",
+    "isHalal": true,
+    "isVegetarian": true,
+    "isAccessible": true,
+    "menuHighlights": ["Water", "Sports Drink", "Fresh Juice", "Iced Coffee"],
+    "coordinates": { "lat": 40.8149, "lng": -74.0750 }
+  },
+  {
+    "id": "vendor-09",
+    "name": "Pretzel Palace",
+    "zone": "FC-S",
+    "cuisine": "Snacks",
+    "isHalal": false,
+    "isVegetarian": true,
+    "isAccessible": true,
+    "menuHighlights": ["Giant Pretzel", "Pretzel Bites", "Cheese Dip", "Lemonade"],
+    "coordinates": { "lat": 40.8121, "lng": -74.0750 }
+  },
+  {
+    "id": "vendor-10",
+    "name": "BBQ Pit",
+    "zone": "FC-S",
+    "cuisine": "Barbecue",
+    "isHalal": true,
+    "isVegetarian": false,
+    "isAccessible": true,
+    "menuHighlights": ["Pulled Chicken", "Grilled Corn", "Coleslaw", "Smoked Ribs"],
+    "coordinates": { "lat": 40.8124, "lng": -74.0746 }
+  }
+]
