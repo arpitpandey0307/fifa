@@ -2,7 +2,13 @@ node_modules
 .next
 .git
 .gitignore
+.gcloudignore
 *.md
+!README.md
 docs/
 .env.local
 .env
+coverage/
+src/__tests__/
+vitest.config.ts
+.vscode/

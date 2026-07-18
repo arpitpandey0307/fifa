@@ -1,0 +1,39 @@
+# ============================================================================
+# FIFA Nexus AI — Google Cloud App Engine Configuration
+# Alternative to Cloud Run deployment
+# ============================================================================
+
+runtime: nodejs20
+env: standard
+instance_class: F2
+
+# Environment variables (set GEMINI_API_KEY via gcloud secrets or console)
+env_variables:
+  NODE_ENV: "production"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+# Auto-scaling configuration
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.65
+  min_pending_latency: 30ms
+  max_pending_latency: automatic
+
+# Health check
+liveness_check:
+  path: "/api/health"
+  check_interval_sec: 30
+
+readiness_check:
+  path: "/api/health"
+  check_interval_sec: 10
+
+# Build configuration
+build_env_variables:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
