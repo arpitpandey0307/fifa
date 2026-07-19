@@ -180,7 +180,11 @@ Respond with valid JSON:
 }`;
 
 /**
- * Build context string for AI from current data.
+ * Build a context string from all dashboard data for the AI summary prompt.
+ * Serializes each data section into a labeled format that Gemini can parse.
+ *
+ * @param data - Dashboard data object containing match, crowd, weather, etc.
+ * @returns Formatted context string for injection into the AI system prompt.
  */
 export function buildDashboardContext(data: Record<string, unknown>): string {
   return `=== CURRENT STADIUM DATA ===
@@ -196,6 +200,14 @@ Active Alerts: ${JSON.stringify(data.alerts)}
 Timestamp: ${new Date().toISOString()}`;
 }
 
+/**
+ * Build a context string combining fan profile and nearby stadium data
+ * for the Fan AI Assistant. Provides personalized context for Gemini.
+ *
+ * @param fanCtx - Fan profile (seat, language, dietary preferences).
+ * @param stadiumCtx - Nearby stadium data (vendors, zone density).
+ * @returns Formatted context string for the fan assistant prompt.
+ */
 export function buildFanContext(
   fanCtx: Record<string, unknown>,
   stadiumCtx: Record<string, unknown>
@@ -206,3 +218,4 @@ ${JSON.stringify(fanCtx)}
 === STADIUM CONTEXT (nearby vendors, current zone density) ===
 ${JSON.stringify(stadiumCtx)}`;
 }
+

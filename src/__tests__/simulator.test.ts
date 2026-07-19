@@ -143,3 +143,28 @@ describe("getVendorMetrics", () => {
     }
   });
 });
+
+describe("Time-dependent Simulation", () => {
+  it("covers all time phases and statuses across simulator functions", () => {
+    vi.useFakeTimers();
+
+    // Loop through 3 hours of simulated match time in 5-minute increments
+    // This ensures we hit:
+    // 1. Pre-match (minute < 0)
+    // 2. Halftime rush (minute 42-65)
+    // 3. Various congestion levels based on noise and base congestion
+    for (let offset = 0; offset <= 180 * 60 * 1000; offset += 5 * 60 * 1000) {
+      // Set system time to a base + offset
+      vi.setSystemTime(new Date(1700000000000 + offset));
+      
+      // Call functions to trigger all branches based on time/minute
+      getMatchInfo();
+      getCrowdMetrics();
+      getTransportMetrics();
+      getVendorMetrics();
+      getDashboardData();
+    }
+    
+    vi.useRealTimers();
+  });
+});

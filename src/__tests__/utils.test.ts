@@ -63,6 +63,15 @@ describe("formatPercent", () => {
   });
 });
 
+describe("formatTime", () => {
+  it("formats timestamp as 24-hour time string", () => {
+    const timestamp = "2026-07-19T14:35:22.000Z";
+    const formatted = formatTime(timestamp);
+    // Since toLocaleTimeString depends on environment timezone, we just verify the format matches HH:MM:SS
+    expect(formatted).toMatch(/^\d{2}:\d{2}:\d{2}$/);
+  });
+});
+
 describe("getRiskColor", () => {
   it("returns correct color for each risk level", () => {
     expect(getRiskColor("low")).toBe("text-emerald-400");
@@ -80,6 +89,10 @@ describe("getRiskBgColor", () => {
   it("returns correct bg classes for each risk level", () => {
     expect(getRiskBgColor("low")).toContain("bg-emerald");
     expect(getRiskBgColor("critical")).toContain("bg-red");
+  });
+
+  it("returns fallback for unknown levels", () => {
+    expect(getRiskBgColor("unknown")).toContain("bg-slate-500/20");
   });
 });
 
@@ -174,5 +187,10 @@ describe("formatRelativeTime", () => {
   it("returns minutes ago for timestamps under an hour", () => {
     const fiveMinAgo = new Date(Date.now() - 5 * 60000).toISOString();
     expect(formatRelativeTime(fiveMinAgo)).toBe("5m ago");
+  });
+
+  it("returns hours ago for older timestamps", () => {
+    const twoHoursAgo = new Date(Date.now() - 2 * 3600000).toISOString();
+    expect(formatRelativeTime(twoHoursAgo)).toBe("2h ago");
   });
 });

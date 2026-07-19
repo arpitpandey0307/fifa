@@ -1,14 +1,23 @@
 // ============================================================================
-// FIFA Nexus AI — App Constants
+// FIFA Nexus AI — Application Constants
+// Centralized configuration values used across the platform.
+// All constants are typed with `as const` for maximum type safety.
 // ============================================================================
 
+/** Application display name. */
 export const APP_NAME = "FIFA Nexus AI";
+
+/** Application tagline used in meta descriptions. */
 export const APP_DESCRIPTION =
   "The AI Operating System for FIFA World Cup 2026 Smart Stadiums";
+
+/** Current application version (SemVer). */
 export const APP_VERSION = "1.0.0";
 
 /**
- * Supported languages with display names.
+ * Supported languages for the multilingual fan assistant.
+ * Includes FIFA official languages and host country languages.
+ * Each entry provides ISO 639-1 code, English name, and native script.
  */
 export const SUPPORTED_LANGUAGES = [
   { code: "en", name: "English", nativeName: "English" },
@@ -21,7 +30,13 @@ export const SUPPORTED_LANGUAGES = [
 ] as const;
 
 /**
- * Risk level thresholds for crowd density.
+ * Crowd density thresholds (percentage) for risk level classification.
+ * Used by the simulation engine and prediction AI to categorize zones.
+ *
+ * - `low`: Normal operations, no action required
+ * - `medium`: Increased monitoring, prepare contingency
+ * - `high`: Active crowd management, deploy volunteers
+ * - `critical`: Emergency protocols, restrict entry
  */
 export const RISK_THRESHOLDS = {
   low: 60,
@@ -31,18 +46,25 @@ export const RISK_THRESHOLDS = {
 } as const;
 
 /**
- * Polling intervals for real-time data (milliseconds).
+ * Polling intervals (milliseconds) for real-time data fetching.
+ * Each endpoint has a tailored interval based on data volatility.
  */
 export const POLLING_INTERVALS = {
-  dashboard: 30_000, // 30 seconds
-  crowd: 15_000, // 15 seconds
-  alerts: 10_000, // 10 seconds
-  transport: 30_000, // 30 seconds
-  sustainability: 60_000, // 1 minute
+  /** General dashboard refresh — 30 seconds. */
+  dashboard: 30_000,
+  /** Crowd density updates — 15 seconds (higher frequency for safety). */
+  crowd: 15_000,
+  /** Alert feed updates — 10 seconds (near real-time). */
+  alerts: 10_000,
+  /** Transport status — 30 seconds. */
+  transport: 30_000,
+  /** Sustainability metrics — 60 seconds (slow-changing data). */
+  sustainability: 60_000,
 } as const;
 
 /**
- * Navigation items for sidebar.
+ * Sidebar navigation items.
+ * Each item maps to a dashboard page with icon and description.
  */
 export const NAV_ITEMS = [
   {
@@ -111,7 +133,11 @@ export const NAV_ITEMS = [
 ] as const;
 
 /**
- * Match phases used by simulator.
+ * Match phase definitions used by the simulation engine.
+ * Each phase has start/end minutes and a human-readable label.
+ *
+ * Timeline: Pre-Match (-120 to 0) → First Half (0–45) → Halftime (45–60)
+ *           → Second Half (60–105) → Post-Match (105–180)
  */
 export const MATCH_PHASES = {
   PRE_MATCH: { start: -120, end: 0, label: "Pre-Match" },

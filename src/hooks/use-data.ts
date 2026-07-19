@@ -1,10 +1,33 @@
 "use client";
 
+// ============================================================================
+// FIFA Nexus AI — Custom React Hooks
+// Data fetching, polling, AI chat, and responsive media query hooks.
+// ============================================================================
+
 import { useState, useEffect, useCallback, useRef } from "react";
 
 /**
- * Hook for polling data at a regular interval.
- * Automatically pauses when the tab is not visible.
+ * Generic polling hook that fetches data at regular intervals.
+ * Automatically **pauses polling** when the browser tab is hidden
+ * (using the Page Visibility API) and resumes on return.
+ *
+ * @typeParam T - The type of data returned by the fetcher.
+ * @param fetcher - Async function that returns the data.
+ * @param intervalMs - Polling interval in milliseconds.
+ * @param enabled - Whether polling is active (default: `true`).
+ * @returns Object with `data`, `error`, `isLoading`, and `refetch`.
+ *
+ * @example
+ * ```tsx
+ * const { data, isLoading } = usePolling(
+ *   useCallback(async () => {
+ *     const res = await fetch("/api/data/dashboard");
+ *     return res.json();
+ *   }, []),
+ *   30000
+ * );
+ * ```
  */
 export function usePolling<T>(
   fetcher: () => Promise<T>,
@@ -21,7 +44,7 @@ export function usePolling<T>(
       const result = await fetcher();
       setData(result);
       setError(null);
-    } catch (err) {
+    } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to fetch data");
     } finally {
       setIsLoading(false);
@@ -55,7 +78,10 @@ export function usePolling<T>(
 }
 
 /**
- * Hook for fetching dashboard data with polling.
+ * Pre-configured polling hook for the main dashboard data endpoint.
+ * Polls `/api/data/dashboard` every 30 seconds.
+ *
+ * @returns Polling result with `DashboardData` type.
  */
 export function useDashboardData() {
   const fetcher = useCallback(async () => {
@@ -68,7 +94,10 @@ export function useDashboardData() {
 }
 
 /**
- * Hook for fetching crowd data with faster polling.
+ * Pre-configured polling hook for crowd density data.
+ * Polls `/api/data/crowd` every 15 seconds (higher frequency for safety).
+ *
+ * @returns Polling result with crowd zone metrics.
  */
 export function useCrowdData() {
   const fetcher = useCallback(async () => {
@@ -81,7 +110,16 @@ export function useCrowdData() {
 }
 
 /**
- * Hook for the AI chat interface.
+ * AI chat hook managing conversation state and API communication.
+ * Handles message history, loading states, and error recovery.
+ *
+ * @returns Object with `messages`, `isLoading`, `sendMessage`, and `clearMessages`.
+ *
+ * @example
+ * ```tsx
+ * const { messages, isLoading, sendMessage } = useAIChat();
+ * sendMessage("Where is my gate?", { seat: "NS-A-R12-S8" });
+ * ```
  */
 export function useAIChat() {
   const [messages, setMessages] = useState<
@@ -138,7 +176,11 @@ export function useAIChat() {
 }
 
 /**
- * Responsive breakpoint hook.
+ * Responsive media query hook using `window.matchMedia`.
+ * Reactively tracks whether a CSS media query matches.
+ *
+ * @param query - CSS media query string (e.g., `"(min-width: 768px)"`).
+ * @returns `true` if the media query currently matches.
  */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false);

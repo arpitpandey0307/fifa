@@ -1,12 +1,25 @@
 // ============================================================================
 // FIFA Nexus AI — Zod Validation Schemas
 // Input validation for all API routes. Security-first approach.
+// Every API endpoint validates input BEFORE processing to prevent
+// injection attacks, oversized payloads, and malformed requests.
 // ============================================================================
 
 import { z } from "zod";
 
 /**
- * Fan assistant chat request validation.
+ * Validation schema for the Fan AI Assistant chat endpoint (`/api/ai/chat`).
+ *
+ * - `message`: Required, 1–2000 characters, auto-trimmed
+ * - `context`: Optional fan profile with defaults for demonstration mode
+ *
+ * @example
+ * ```ts
+ * const parsed = chatRequestSchema.safeParse({
+ *   message: "Where is my gate?",
+ *   context: { seat: "NS-A-R12-S8", language: "en" }
+ * });
+ * ```
  */
 export const chatRequestSchema = z.object({
   message: z
@@ -36,10 +49,22 @@ export const chatRequestSchema = z.object({
     })),
 });
 
+/** Inferred TypeScript type from chatRequestSchema. */
 export type ChatRequest = z.infer<typeof chatRequestSchema>;
 
 /**
- * Incident report request validation.
+ * Validation schema for the Incident Commander endpoint (`/api/ai/incident`).
+ *
+ * - `description`: Required, 5–1000 characters, auto-trimmed
+ * - `reporterLocation`: Optional GPS coordinates with range validation
+ *
+ * @example
+ * ```ts
+ * const parsed = incidentRequestSchema.safeParse({
+ *   description: "Someone fainted near Gate B",
+ *   reporterLocation: { lat: 40.8128, lng: -74.0742 }
+ * });
+ * ```
  */
 export const incidentRequestSchema = z.object({
   description: z
@@ -55,10 +80,13 @@ export const incidentRequestSchema = z.object({
     .optional(),
 });
 
+/** Inferred TypeScript type from incidentRequestSchema. */
 export type IncidentRequest = z.infer<typeof incidentRequestSchema>;
 
 /**
- * Crowd prediction request validation.
+ * Validation schema for the Crowd Prediction endpoint (`/api/ai/predict`).
+ *
+ * - `zoneIds`: Array of zone codes (1–20), defaults to empty (all zones)
  */
 export const predictionRequestSchema = z.object({
   zoneIds: z
@@ -69,10 +97,15 @@ export const predictionRequestSchema = z.object({
     .default([]),
 });
 
+/** Inferred TypeScript type from predictionRequestSchema. */
 export type PredictionRequest = z.infer<typeof predictionRequestSchema>;
 
 /**
- * Transport route request validation.
+ * Validation schema for Transport route requests.
+ *
+ * - `originZone`: Starting zone code (default: "NS-A")
+ * - `accessibility`: Accessibility requirements (default: "none")
+ * - `preference`: Route optimization strategy (fastest, least_crowded, cheapest)
  */
 export const transportRequestSchema = z.object({
   originZone: z.string().optional().default("NS-A"),
@@ -80,10 +113,16 @@ export const transportRequestSchema = z.object({
   preference: z.enum(["fastest", "least_crowded", "cheapest"]).optional().default("fastest"),
 });
 
+/** Inferred TypeScript type from transportRequestSchema. */
 export type TransportRequest = z.infer<typeof transportRequestSchema>;
 
 /**
- * Settings update validation.
+ * Validation schema for user settings updates.
+ * All fields are optional to support partial updates.
+ *
+ * - `role`: One of the 7 supported user roles
+ * - `language`: ISO 639-1 language code (2–5 characters)
+ * - Accessibility toggles: boolean flags for each feature
  */
 export const settingsSchema = z.object({
   role: z.enum(["fan", "volunteer", "security", "manager", "transport", "medical", "vendor"]).optional(),
@@ -94,4 +133,5 @@ export const settingsSchema = z.object({
   notifications: z.boolean().optional(),
 });
 
+/** Inferred TypeScript type from settingsSchema. */
 export type SettingsUpdate = z.infer<typeof settingsSchema>;

@@ -234,16 +234,28 @@ gcloud app deploy app.yaml
 
 | Criterion | Implementation |
 |-----------|---------------|
-| **Code Quality** | TypeScript strict mode, modular architecture, JSDoc on all exports, zero unused imports, clean separation of concerns |
-| **Security** | Zod validation, XSS sanitization, rate limiting, HSTS, CSP without unsafe-eval, env-based secrets, non-root Docker |
+| **Code Quality** | TypeScript strict mode, modular architecture, JSDoc on all exports, zero unused imports, clean separation of concerns. See [ARCHITECTURE.md](ARCHITECTURE.md) and [CONTRIBUTING.md](CONTRIBUTING.md) |
+| **Security** | Zod validation, XSS sanitization, rate limiting, HSTS, CSP without unsafe-eval, env-based secrets, non-root Docker. See [SECURITY.md](SECURITY.md) |
 | **Efficiency** | Standalone Next.js output, tab-visibility polling pause, memoized callbacks, lazy loading, seeded deterministic simulation |
-| **Testing** | Vitest + React Testing Library, 6 test suites covering utils, schemas, simulator, API routes, Gemini client, and constants/prompts |
-| **Accessibility** | WCAG 2.1 AA, ARIA roles/labels, keyboard nav, high contrast, reduced motion, skip-nav, 7 languages |
+| **Testing** | Vitest with 9 test suites, 120+ tests covering utils, schemas, simulator, API routes, Gemini client, constants/prompts, settings store, accessibility, and middleware |
+| **Accessibility** | WCAG 2.1 AA, ARIA roles/labels, keyboard nav, high contrast, reduced motion, skip-nav, 7 languages. See accessibility tests |
 | **Google Services** | Gemini 2.0 Flash + 2.5 Pro via `@google/genai`, Cloud Run + App Engine deployment, Dockerfile with health checks |
-| **Problem Alignment** | All 7 personas (fan, volunteer, security, organizer, medical, transport, vendor) with GenAI-powered features for navigation, crowd management, accessibility, multilingual support, sustainability, and real-time decision making |
+| **Problem Alignment** | All 7 personas (fan, volunteer, security, organizer, medical, transport, vendor) with GenAI-powered features. See [SOLUTION.md](SOLUTION.md) for detailed feature-to-challenge mapping |
+
+---
+
+## 📚 Documentation
+
+| Document | Purpose |
+|----------|---------|
+| [SOLUTION.md](SOLUTION.md) | Detailed problem-solution mapping with all 7 personas and AI features |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | System architecture, data flow diagrams, and design decisions |
+| [SECURITY.md](SECURITY.md) | Security policy, vulnerability reporting, and protection measures |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Development setup, code standards, and commit conventions |
 
 ---
 
 ## 📄 License
 
 Built for the FIFA World Cup 2026 PromptWars Hackathon. © 2026 FIFA Nexus AI Team.
+

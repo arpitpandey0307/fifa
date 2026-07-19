@@ -7,13 +7,13 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock the @google/genai module before importing gemini
 vi.mock("@google/genai", () => ({
-  GoogleGenAI: vi.fn().mockImplementation(() => ({
-    models: {
+  GoogleGenAI: class {
+    models = {
       generateContent: vi.fn().mockResolvedValue({
         text: "Mock Gemini response",
       }),
-    },
-  })),
+    };
+  },
 }));
 
 describe("Gemini Client", () => {
@@ -80,6 +80,72 @@ describe("Gemini Client", () => {
       await expect(
         callGeminiJSON("system", "test")
       ).rejects.toThrow("Gemini API key not configured");
+    });
+
+    it("parses and returns JSON on success", async () => {
+      process.env.GEMINI_API_KEY = "test-key";
+      vi.doMock("@google/genai", () => ({
+        GoogleGenAI: class {
+          models = {
+            generateContent: vi.fn().mockResolvedValue({
+              text: '{"status":"ok"}',
+            }),
+          };
+        },
+      }));
+
+      const { callGeminiJSON } = await import("@/lib/gemini");
+      const result = await callGeminiJSON("sys", "user");
+      expect(result).toEqual({ status: "ok" });
+    });
+
+    it("handles generateContent throwing an error", async () => {
+      process.env.GEMINI_API_KEY = "test-key";
+      vi.doMock("@google/genai", () => ({
+        GoogleGenAI: class {
+          models = {
+            generateContent: vi.fn().mockRejectedValue(new Error("API Error")),
+          };
+        },
+      }));
+
+      const { callGeminiJSON } = await import("@/lib/gemini");
+      await expect(callGeminiJSON("sys", "user")).rejects.toThrow("API Error");
+    });
+  });
+
+  describe("callGemini success", () => {
+    it("returns text response on success", async () => {
+      process.env.GEMINI_API_KEY = "test-key";
+      vi.doMock("@google/genai", () => ({
+        GoogleGenAI: class {
+          models = {
+            generateContent: vi.fn().mockResolvedValue({
+              text: "Success response",
+            }),
+          };
+        },
+      }));
+
+      const { callGemini } = await import("@/lib/gemini");
+      const result = await callGemini("sys", "user");
+      expect(result).toBe("Success response");
+    });
+    
+    it("handles generateContent throwing an error in callGemini", async () => {
+      process.env.GEMINI_API_KEY = "test-key";
+      vi.doMock("@google/genai", () => ({
+        GoogleGenAI: class {
+          models = {
+            generateContent: vi.fn().mockRejectedValue(new Error("Text API Error")),
+          };
+        },
+      }));
+
+      const { callGemini } = await import("@/lib/gemini");
+      // callGemini catches errors and returns a fallback when API fails
+      const result = await callGemini("sys", "user");
+      expect(result).toContain("FIFA Nexus AI"); // generic fallback
     });
   });
 });
